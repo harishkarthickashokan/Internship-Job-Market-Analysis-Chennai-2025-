@@ -20,26 +20,22 @@ def map_posting_range(val):
         return "High"
 
 def main():
-    # === Load dataset ===
+    
     df = pd.read_csv("internship-in-chennai.csv")
 
-    # === Convert posting_count float values to Low/Medium/High ===
     if 'posting_count' in df.columns:
         df['posting_count'] = df['posting_count'].astype(float)
         df['posting_level'] = df['posting_count'].apply(map_posting_range)
         print("\nConverted posting_count to posting_level:")
         print(df[['posting_count','posting_level']].head(), "\n")
     else:
-        print("\n⚠️ Column 'posting_count' not found! Tell me the correct column name.\n")
+        print("\n Column 'posting_count' not found! Tell me the correct column name.\n")
 
-    # === 1. Which jobs are more preferred ===
     role_counts = df['profile'].value_counts().reset_index()
     role_counts.columns = ['profile', 'count']
 
     print("\nTop 15 Most Preferred Internship Roles:\n")
     print(role_counts.head(15))
-
-    # === 2. Extract skill requirements for skill analysis ===
     df['Skills_clean'] = df['Skills'].apply(clean_skill)
 
     all_skills = []
@@ -52,9 +48,8 @@ def main():
     for skill, count in skill_freq:
         print(f"{skill} : {count}")
 
-    # === Visualization ===
-    # Roles
-    plt.figure(figsize=(10,5))
+   
+  plt.figure(figsize=(10,5))
     plt.bar(role_counts['profile'][:10], role_counts['count'][:10])
     plt.title("Top Internship Roles (Demand)")
     plt.xticks(rotation=45, ha='right')
@@ -63,7 +58,7 @@ def main():
     plt.tight_layout()
     plt.show()
 
-    # Skills
+
     skills, counts = zip(*skill_freq)
     plt.figure(figsize=(10,5))
     plt.bar(skills, counts)
@@ -76,3 +71,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
