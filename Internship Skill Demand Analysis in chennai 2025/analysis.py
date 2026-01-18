@@ -21,7 +21,7 @@ def map_posting_range(val):
 
 def main():
     
-    df = pd.read_csv("internship-in-chennai.csv")
+    df = pd.read_csv("internships.csv")
 
     if 'posting_count' in df.columns:
         df['posting_count'] = df['posting_count'].astype(float)
@@ -71,4 +71,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
